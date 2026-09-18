@@ -1,10 +1,3 @@
-# Cómo publicarlo en GitHub Pages
-
-1. Crea un repositorio nuevo en GitHub (puede ser público, es requisito para el plan gratuito).
-2. Sube `index.html` a la raíz del repositorio.
-3. Ve a **Settings → Pages**.
-4. En "Source" elige la rama `main` y la carpeta `/root`, luego guarda.
-5. En un par de minutos tu sitio queda disponible en `https://tu-usuario.github.io/nombre-del-repo/`.
 
 ## Cómo editar el contenido (sin tocar HTML ni CSS)
 
