@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portafolio — Soluciones POS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('has-js');</script>
+<style>
+  :root{
+    --bg:#0F1A18;
+    --bg-panel:#172723;
+    --bg-panel-2:#1E332D;
+    --line:#345048;
+    --text:#F7F5EF;
+    --text-muted:#AFC4BB;
+    --brass:#E7AD47;
+    --brass-dim:#8C6A2C;
+    --teal:#5DBE9E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; background:#0F1A18; background:var(--bg);}
+  body{
+    margin:0;
+    background:#0F1A18;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.6;
+    min-height:100vh;
+  }
+  h1,h2,h3{
+    font-family:'Roboto Slab', serif;
+    margin:0;
+    font-weight:600;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:inherit;}
+
+  .wrap{
+    max-width:760px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  header.site{
+    position:sticky; top:0; z-index:50;
+    background:rgba(15,26,24,0.9);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  header.site .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:16px; padding-bottom:16px;
+  }
+  .brand{font-family:'Roboto Slab',serif; font-size:1.05rem; font-weight:700; letter-spacing:0.02em;}
+  .brand span{color:var(--brass);}
+  nav.site-nav{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:8px 16px;}
+  nav.site-nav a{
+    text-decoration:none; color:var(--text-muted); font-size:0.88rem;
+    transition:color .2s;
+  }
+  nav.site-nav a:hover{color:var(--text);}
+  @media (max-width:600px){
+    nav.site-nav{display:none;}
+  }
+
+  section{padding:96px 0;}
+  section + section{border-top:1px solid var(--line);}
+
+  /* ---------- HERO ---------- */
+  .hero{padding-top:110px; padding-bottom:110px;}
+  .hero-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px; align-items:center;}
+  .eyebrow{color:var(--teal); font-size:0.85rem; margin-bottom:14px;}
+  .hero h1{font-size:2.7rem; line-height:1.15; letter-spacing:-0.01em;}
+  .hero p.lede{
+    color:var(--text-muted); font-size:1.08rem; margin-top:20px; max-width:46ch;
+  }
+  .hero-actions{margin-top:32px; display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    display:inline-block; padding:12px 22px; border-radius:2px;
+    text-decoration:none; font-size:0.95rem; font-weight:500;
+    border:1px solid var(--line); transition:border-color .2s, background .2s;
+  }
+  .btn.primary{background:var(--brass); color:#1A1305; border-color:var(--brass);}
+  .btn.primary:hover{background:#EDB456;}
+  .btn.ghost:hover{border-color:var(--text-muted);}
+
+  /* receipt ticker */
+  .receipt{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    padding:22px 22px 26px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.82rem;
+    color:var(--text-muted);
+    position:relative;
+    overflow:hidden;
+    min-height:270px;
+  }
+  .receipt::before{
+    content:"";
+    position:absolute; inset:0;
+    background:repeating-linear-gradient(transparent 0 27px, rgba(255,255,255,0.02) 27px 28px);
+    pointer-events:none;
+  }
+  .receipt .rline{
+    display:flex; justify-content:space-between;
+    padding:5px 0; opacity:0; transform:translateY(6px);
+    animation:printline .4s forwards;
+  }
+  .receipt .rline.dim{color:var(--text-muted);}
+  .receipt .rtotal{
+    border-top:1px dashed var(--line); margin-top:10px; padding-top:10px;
+    color:var(--brass); font-weight:600; display:flex; justify-content:space-between;
+  }
+  @keyframes printline{to{opacity:1; transform:translateY(0);}}
+
+  /* ---------- SECTION HEADINGS ---------- */
+  .section-head{margin-bottom:44px; max-width:56ch;}
+  .section-head h2{font-size:1.7rem;}
+  .section-head p{color:var(--text-muted); margin-top:10px;}
+
+  /* ---------- ABOUT / SERVICES ---------- */
+  .services{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+  .service{background:var(--bg); padding:26px 24px;}
+  .service h3{font-size:1.02rem; font-weight:600;}
+  .service p{color:var(--text-muted); font-size:0.92rem; margin-top:8px;}
+
+  /* ---------- CERTIFICACIONES ---------- */
+  .cert-list{display:flex; flex-direction:column; border-top:1px solid var(--line);}
+  .cert{
+    display:flex; justify-content:space-between; align-items:baseline;
+    gap:20px; padding:18px 0; border-bottom:1px solid var(--line);
+  }
+  .cert .name{font-weight:500; display:inline-block;}
+  .cert a.name{
+    text-decoration:none;
+    border-bottom:1px solid var(--brass-dim);
+    transition:border-color .2s, color .2s;
+  }
+  .cert a.name:hover{border-color:var(--brass); color:var(--brass);}
+  .cert .issuer{color:var(--text-muted); font-size:0.88rem;}
+  .cert .year{color:var(--brass); font-family:'IBM Plex Mono',monospace; font-size:0.85rem; white-space:nowrap;}
+
+  /* ---------- MAPS (auto-contenido, sin servicio externo) ---------- */
+  /* Las tarjetas se acomodan solas: no hay coordenadas que calcular.
+     El contenido real se genera desde EDITAR_AQUI al final del archivo. */
+  .netmap{
+    position:relative;
+    min-height:180px;
+    border:1px solid var(--line);
+    background-color:var(--bg-panel);
+    background-image:radial-gradient(var(--line) 1px, transparent 1px);
+    background-size:22px 22px;
+    padding:28px;
+    display:flex; flex-wrap:wrap; align-content:flex-start; gap:14px;
+  }
+  .netmap .node{
+    display:flex; align-items:center; gap:9px;
+  }
+  .netmap .node .dot{
+    width:10px; height:10px; border-radius:50%;
+    flex:none;
+    box-shadow:0 0 0 0 currentColor;
+  }
+  html.has-js .netmap .node .dot{animation:pulse 2.4s ease-out infinite;}
+  .netmap .node .dot.brass{background:var(--brass); color:var(--brass);}
+  .netmap .node .dot.teal{background:var(--teal); color:var(--teal);}
+  .netmap .node .label{
+    font-size:0.85rem;
+    background:rgba(15,26,24,0.82);
+    padding:6px 11px;
+    border:1px solid var(--line);
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 currentColor;}
+    70%{box-shadow:0 0 0 10px transparent;}
+    100%{box-shadow:0 0 0 0 transparent;}
+  }
+  .map-caption{margin-top:14px; font-size:0.85rem; color:var(--text-muted);}
+  .empty-hint{color:var(--text-muted); font-size:0.88rem; font-style:italic;}
+
+  /* ---------- CONTACT ---------- */
+  .contact h2{font-size:1.9rem;}
+  .contact p{color:var(--text-muted); margin-top:12px; max-width:50ch;}
+  .contact-links{margin-top:28px; display:flex; gap:26px; flex-wrap:wrap;}
+  .contact-links a{
+    text-decoration:none; border-bottom:1px solid var(--brass-dim); padding-bottom:2px; font-size:0.95rem;
+  }
+  .contact-links a:hover{border-color:var(--brass);}
+
+  footer{padding:32px 0; text-align:center; color:var(--text-muted); font-size:0.82rem;}
+
+  /* ---------- REVEAL ---------- */
+  /* Visible por defecto. Si el JS corre, se anima al entrar en pantalla;
+     si algo falla, un temporizador de seguridad (abajo, en el script)
+     lo revela igual a los pocos segundos — nunca queda invisible. */
+  .reveal{opacity:1; transform:none;}
+  html.has-js .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
+  html.has-js .reveal.in{opacity:1; transform:translateY(0);}
+
+  @media (max-width:720px){
+    .hero-grid{grid-template-columns:1fr;}
+    .services{grid-template-columns:1fr;}
+    .hero h1{font-size:2.1rem;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    html.has-js .reveal{opacity:1; transform:none; transition:none;}
+    .receipt .rline{animation:none; opacity:1; transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <div class="brand">tu<span>nombre</span></div>
+    <nav class="site-nav">
+      <a href="#servicios">Servicios</a>
+      <a href="#certificaciones">Certificaciones</a>
+      <a href="#puntos-de-venta">Puntos de venta</a>
+      <a href="#paginas">Páginas</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Sistemas de punto de venta a medida</div>
+      <h1>Digitalizo el mesón de venta para que ningún dato se pierda.</h1>
+      <p class="lede">Diseño e implemento sistemas POS para comercios que hoy anotan en cuaderno o planilla: integración de básculas, control de caja y reportes en tiempo real.</p>
+      <div class="hero-actions">
+        <a href="#puntos-de-venta" class="btn primary">Ver instalaciones activas</a>
+        <a href="#contacto" class="btn ghost">Conversemos tu caso</a>
+      </div>
+    </div>
+    <div class="receipt" id="receipt"></div>
+  </div>
+</section>
+
+<section id="servicios">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Qué resuelvo</h2>
+      <p>Cada instalación parte del mismo problema: el dato de venta se pierde entre el mesón y la planilla. Esto es lo que construyo para cerrar esa brecha.</p>
+    </div>
+    <div class="services reveal">
+      <div class="service">
+        <h3>Integración de báscula al POS</h3>
+        <p>Conexión de básculas tipificadoras o de pesaje simple al sistema, con o sin impresión de código de barras según el flujo del local.</p>
+      </div>
+      <div class="service">
+        <h3>Sistema POS de caja y ventas</h3>
+        <p>Registro de venta en el momento, sin traspaso manual a Excel, con historial y cierre de caja diario.</p>
+      </div>
+      <div class="service">
+        <h3>Reportes para el dueño del negocio</h3>
+        <p>Visibilidad de qué se vendió, cuándo y en qué estación, sin depender de una planilla armada a mano.</p>
+      </div>
+      <div class="service">
+        <h3>Páginas web para el negocio</h3>
+        <p>Presencia web simple y rápida para que los clientes encuentren horarios, ubicación y catálogo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certificaciones">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Certificaciones</h2>
+      <p>Edita la lista al final del archivo (busca CERTIFICACIONES) para agregar o quitar tus certificaciones — no necesitas tocar este bloque.</p>
+    </div>
+    <div class="cert-list reveal" id="cert-list"></div>
+    <noscript><p class="empty-hint">Activa JavaScript para ver las certificaciones.</p></noscript>
+  </div>
+</section>
+
+<section id="puntos-de-venta">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Puntos de venta en funcionamiento</h2>
+      <p>Edita la lista al final del archivo (busca PUNTOS_DE_VENTA) para agregar tus instalaciones reales — no necesitas calcular posiciones ni tocar HTML.</p>
+    </div>
+    <div class="netmap reveal" id="pos-grid"></div>
+    <noscript><p class="empty-hint">Activa JavaScript para ver el mapa.</p></noscript>
+    <p class="map-caption reveal">Cada punto representa una instalación con el sistema funcionando en producción.</p>
+  </div>
+</section>
+
+<section id="paginas">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Páginas web publicadas</h2>
+      <p>Sitios entregados y en línea para negocios clientes.</p>
+    </div>
+    <div class="netmap reveal" id="web-grid"></div>
+    <noscript><p class="empty-hint">Activa JavaScript para ver el listado.</p></noscript>
+    <p class="map-caption reveal">Sitios entregados y actualmente en línea.</p>
+  </div>
+</section>
+
+<section id="contacto" class="contact">
+  <div class="wrap">
+    <div class="reveal">
+      <h2>¿Tienes un local con fugas de datos?</h2>
+      <p>Cuéntame cómo vendes hoy — cuaderno, planilla, otro sistema — y evaluamos juntos qué necesita tu mesón de venta.</p>
+      <div class="contact-links">
+        <a href="mailto:tu@correo.com">tu@correo.com</a>
+        <a href="https://wa.me/56900000000" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://github.com/tu-usuario" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© <span id="year"></span> — Portafolio construido con GitHub Pages.</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ---- receipt ticker (hero) ----
+  const receiptLines = [
+    {l:"SISTEMA POS — TICKET DE EJEMPLO", dim:true},
+    {l:""},
+    {l:"1x Carne molida 1kg", r:"$5.990"},
+    {l:"2x Bebida 1.5L", r:"$3.980"},
+    {l:"1x Pan integral", r:"$2.490"},
+    {l:"  báscula: peso 0.480kg", dim:true},
+    {l:"  código: EAN-13 sync", dim:true},
+  ];
+  const receiptEl = document.getElementById('receipt');
+  let delay = 0;
+  receiptLines.forEach(item=>{
+    const row = document.createElement('div');
+    row.className = 'rline' + (item.dim ? ' dim' : '');
+    row.style.animationDelay = delay + 'ms';
+    row.innerHTML = `<span>${item.l || '&nbsp;'}</span><span>${item.r || ''}</span>`;
+    receiptEl.appendChild(row);
+    delay += 160;
+  });
+  const total = document.createElement('div');
+  total.className = 'rtotal rline';
+  total.style.animationDelay = delay + 'ms';
+  total.innerHTML = '<span>TOTAL</span><span>$12.460</span>';
+  receiptEl.appendChild(total);
+
+  // ---- scroll reveal (con salvaguarda: nunca queda invisible) ----
+  try{
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.15});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  }catch(err){ console.error('Reveal no disponible:', err); }
+  // Red de seguridad: pase lo que pase, todo queda visible a los 2s.
+  setTimeout(()=>{ document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in')); }, 2000);
+
+  // ============================================================
+  // EDITAR AQUÍ — esta es la única parte que necesitas tocar para
+  // actualizar certificaciones, puntos de venta y páginas web.
+  // No necesitas coordenadas ni tocar el HTML/CSS de arriba.
+  // ============================================================
+  const CERTIFICACIONES = [
+    { nombre: "Nombre de la certificación", emisor: "Entidad emisora", anio: "2024", archivo: "certificados/certificacion-1.pdf" },
+    { nombre: "Nombre de la certificación", emisor: "Entidad emisora", anio: "2023", archivo: "certificados/certificacion-2.pdf" },
+    { nombre: "Nombre de la certificación", emisor: "Entidad emisora", anio: "2022", archivo: "certificados/certificacion-3.pdf" },
+  ];
+
+  const PUNTOS_DE_VENTA = [
+    { nombre: "Carnicería", ciudad: "Santiago" },
+    { nombre: "Almacén", ciudad: "Valparaíso" },
+    { nombre: "Minimarket", ciudad: "Concepción" },
+  ];
+
+  const PAGINAS_WEB = [
+    { nombre: "Sitio", ciudad: "Santiago" },
+    { nombre: "Sitio", ciudad: "La Serena" },
+  ];
+  // ============================================================
+  // FIN DE LA ZONA EDITABLE
+  // ============================================================
+
+  function escapar(s){
+    return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+
+  function pintarCertificaciones(){
+    const el = document.getElementById('cert-list');
+    if(!el) return;
+    el.innerHTML = CERTIFICACIONES.map(c => {
+      const nombre = c.archivo
+        ? `<a class="name" href="${escapar(c.archivo)}" target="_blank" rel="noopener">${escapar(c.nombre)}</a>`
+        : `<div class="name">${escapar(c.nombre)}</div>`;
+      return `
+      <div class="cert">
+        <div>
+          ${nombre}
+          <div class="issuer">${escapar(c.emisor)}</div>
+        </div>
+        <div class="year">${escapar(c.anio)}</div>
+      </div>`;
+    }).join('');
+  }
+
+  function pintarUbicaciones(elId, lista, colorClass){
+    const el = document.getElementById(elId);
+    if(!el) return;
+    el.innerHTML = lista.map(p => `
+      <div class="node">
+        <span class="dot ${colorClass}"></span>
+        <span class="label">${escapar(p.nombre)} — ${escapar(p.ciudad)}</span>
+      </div>`).join('');
+  }
+
+  try{
+    pintarCertificaciones();
+    pintarUbicaciones('pos-grid', PUNTOS_DE_VENTA, 'brass');
+    pintarUbicaciones('web-grid', PAGINAS_WEB, 'teal');
+  }catch(err){ console.error('No se pudo pintar el contenido:', err); }
+</script>
+</body>
+</html>
